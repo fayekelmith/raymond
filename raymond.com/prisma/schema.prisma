@@ -1,0 +1,39 @@
+// Raymond Progress Tracking - Prisma Schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ===== Status Updates =====
+model StatusUpdate {
+  id        String   @id @default(cuid())
+  content   String   // What I worked on
+  blockers  String?  // Any blockers
+  tomorrow  String?  // What I plan to do
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ===== Milestones =====
+model Milestone {
+  id          String          @id @default(cuid())
+  title       String
+  description String?
+  progress    Int             @default(0) // 0-100
+  status      MilestoneStatus @default(UPCOMING)
+  targetDate  DateTime?
+  order       Int             @default(0) // For custom ordering
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+}
+
+enum MilestoneStatus {
+  UPCOMING
+  IN_PROGRESS
+  COMPLETED
+}

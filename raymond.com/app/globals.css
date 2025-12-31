@@ -3,11 +3,18 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ===== RAYMOND DESIGN SYSTEM ===== */
+
+/* Custom fonts */
 @theme inline {
+  /* Inter for body text - clean and readable */
+  --font-sans: var(--font-inter);
+  /* Kode Mono for data/stats */
+  --font-mono: var(--font-kode-mono);
+
+  /* Color mappings */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -42,77 +49,59 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
   --radius-2xl: calc(var(--radius) + 8px);
-  --radius-3xl: calc(var(--radius) + 12px);
-  --radius-4xl: calc(var(--radius) + 16px);
+
+  /* Custom accent colors */
+  --color-cyan: #00d4ff;
+  --color-amber: #ffb347;
+  --color-purple: #a855f7;
 }
 
+/* Dark theme (default for Raymond) */
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+
+  /* Raymond Cyberpunk Colors */
+  --background: #0e1116;
+  --foreground: #e6edf3;
+  --card: #161b22;
+  --card-foreground: #e6edf3;
+  --popover: #161b22;
+  --popover-foreground: #e6edf3;
+  --primary: #00d4ff;
+  --primary-foreground: #0e1116;
+  --secondary: #1c2128;
+  --secondary-foreground: #e6edf3;
+  --muted: #1c2128;
+  --muted-foreground: #7d8590;
+  --accent: #a855f7;
+  --accent-foreground: #e6edf3;
+  --destructive: #f85149;
+  --border: rgba(0, 212, 255, 0.15);
+  --input: rgba(0, 212, 255, 0.1);
+  --ring: #00d4ff;
+
+  /* Chart colors */
+  --chart-1: #00d4ff;
+  --chart-2: #a855f7;
+  --chart-3: #ffb347;
+  --chart-4: #22c55e;
+  --chart-5: #f85149;
+
+  /* Sidebar */
+  --sidebar: #0e1116;
+  --sidebar-foreground: #e6edf3;
+  --sidebar-primary: #00d4ff;
+  --sidebar-primary-foreground: #0e1116;
+  --sidebar-accent: #1c2128;
+  --sidebar-accent-foreground: #e6edf3;
+  --sidebar-border: rgba(0, 212, 255, 0.15);
+  --sidebar-ring: #00d4ff;
 }
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+/* Unused light theme - keeping minimal for compatibility */
+.light {
+  --background: #ffffff;
+  --foreground: #0e1116;
 }
 
 @layer base {
@@ -121,5 +110,69 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+
+  /* Headings use Kode Mono - experimental */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-kode-mono);
+  }
+}
+
+/* ===== GLOW UTILITIES ===== */
+@layer utilities {
+  .glow-cyan {
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3), 0 0 40px rgba(0, 212, 255, 0.1);
+  }
+
+  .glow-cyan-sm {
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
+  }
+
+  .glow-amber {
+    box-shadow: 0 0 20px rgba(255, 179, 71, 0.3),
+      0 0 40px rgba(255, 179, 71, 0.1);
+  }
+
+  .glow-purple {
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.3),
+      0 0 40px rgba(168, 85, 247, 0.1);
+  }
+
+  .border-glow {
+    border-color: rgba(0, 212, 255, 0.3);
+  }
+
+  .hover-glow {
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+
+  .hover-glow:hover {
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+    border-color: rgba(0, 212, 255, 0.5);
+  }
+
+  /* Text glow */
+  .text-glow-cyan {
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+  }
+
+  .text-glow-amber {
+    text-shadow: 0 0 10px rgba(255, 179, 71, 0.5);
+  }
+
+  /* Monospace accent - for stats, percentages, dates, code */
+  .font-data {
+    font-family: var(--font-kode-mono);
+    letter-spacing: 0.025em;
+  }
+
+  /* Heading font utility */
+  .font-heading {
+    font-family: var(--font-unbounded);
   }
 }
