@@ -1,0 +1,8 @@
+[target.'cfg(all(target_arch = "arm", target_os = "none"))']
+runner = "elf2uf2-rs -d"
+# Tells cargo to automatically convert to binary and deploy it to the USB device specifically"
+[build]
+target = "thumbv6m-none-eabi"
+# Tells cargo to cross-compile by default, for the raspberry pi Pico (RP2040)
+[env]
+DEFMT_LOG = "debug"
