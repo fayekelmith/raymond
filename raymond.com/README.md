@@ -1,143 +1,64 @@
-# Raymond Progress Tracking Site
+# Raymond.com
 
-A personal progress tracking site for the Raymond embedded Rust project, featuring a subtle Robotic/Cyberpunk + Mission Control aesthetic.
+The personal website and digital garden for [Your Name] / Raymond.
+Built with Next.js 15 (App Router), Tailwind CSS, Prisma, and PostgreSQL.
 
----
+## Features
 
-## Tech Stack
+- **Mission Control**: Private admin dashboard to manage content.
+- **Focus Widget**: Show visitors what you're currently working on.
+- **Ideas System**: Allow visitors to submit feedback/ideas.
+- **Resource Library**: Curated list of useful links and tools.
+- **Dev Log**: File-based Markdown blog for updates.
+- **Cyberpunk Theme**: Custom design with animations and glitch effects.
 
-| Component  | Technology            | Notes                              |
-| ---------- | --------------------- | ---------------------------------- |
-| Framework  | **Next.js 16**        | App Router                         |
-| Styling    | **TailwindCSS 4**     | Already installed                  |
-| UI         | **shadcn/ui**         | Default style                      |
-| Animations | **Framer Motion**     | To be installed                    |
-| CMS/Blog   | **Outstatic**         | Git-based, lives in repo           |
-| Database   | **PostgreSQL**        | Docker (local) / Neon (production) |
-| ORM        | **Prisma**            | Type-safe queries                  |
-| Auth       | ENV-based credentials | Simple server-side check           |
-| Deployment | **Vercel**            | Automatic from GitHub              |
+## Getting Started
 
----
+1.  **Clone the repo**:
 
-## Design System
+    ```bash
+    git clone https://github.com/yourusername/raymond.git
+    cd raymond/raymond.com
+    ```
 
-### Typography
+2.  **Install dependencies**:
 
-| Usage                             | Font          |
-| --------------------------------- | ------------- |
-| **Sans-serif** (headings, body)   | **Unbounded** |
-| **Monospace** (code, data, stats) | **Kode Mono** |
+    ```bash
+    npm install
+    ```
 
-> **Important:** Use Kode Mono sparingly - only for code snippets, data values, and status indicators.
+3.  **Environment Setup**:
+    Copy `.env.example` to `.env` (or create one) with:
 
-### Color Palette
+    ```env
+    DATABASE_URL="postgresql://user:password@localhost:5432/raymond"
+    NEXT_PUBLIC_APP_URL="http://localhost:3000"
+    # Auth secrets (if you added auth library, otherwise admin is currently unproctected for demo)
+    ```
 
-| Token             | Hex                      | Usage                                |
-| ----------------- | ------------------------ | ------------------------------------ |
-| `--bg-dark`       | `#0e1116`                | Primary background (rich black)      |
-| `--bg-surface`    | `#161b22`                | Cards, panels, elevated surfaces     |
-| `--accent-cyan`   | `#00d4ff`                | Primary accent, interactive elements |
-| `--accent-amber`  | `#ffb347`                | Warnings, highlights, progress bars  |
-| `--accent-purple` | `#a855f7`                | Secondary accent, tags, badges       |
-| `--text-primary`  | `#e6edf3`                | Main text                            |
-| `--text-muted`    | `#7d8590`                | Secondary text, captions             |
-| `--border-glow`   | `rgba(0, 212, 255, 0.3)` | Subtle neon borders                  |
+4.  **Database Setup**:
 
-### Visual Elements
+    ```bash
+    npx prisma migrate dev
+    ```
 
-- **Borders**: Thin (1px) with subtle glow on hover
-- **Cards**: Dark surfaces with slight transparency
-- **Shadows**: Colored glow effects instead of traditional shadows
-- **Interactions**: Glow intensifies on hover
+5.  **Run Development Server**:
+    ```bash
+    npm run dev
+    ```
 
----
+## Deployment
 
-## Local Development
+This project is optimized for deployment on **Vercel**.
 
-### Prerequisites
+1.  Push your code to a GitHub repository.
+2.  Import the project in Vercel.
+3.  Add your `DATABASE_URL` to Vercel Environment Variables.
+4.  The `postinstall` script (`prisma generate`) will run automatically.
+5.  Deploy!
 
-- Docker and Docker Compose
+### Scripts
 
-### Setup
-
-```bash
-# Start local PostgreSQL
-docker compose up -d
-
-# Install dependencies
-npm install
-
-# Generate Prisma client and push schema
-npx prisma generate
-npx prisma db push
-
-# Run development server
-npm run dev
-```
-
-### Environment Variables
-
-```env
-# .env.local (local development)
-DATABASE_URL="postgresql://raymond:raymond123@localhost:5432/raymond_dev"
-ADMIN_USERNAME="admin"
-ADMIN_PASSWORD="admin123"
-```
-
----
-
-## Phase 1: Foundation (MVP)
-
-### 1.1 Local Database Setup
-
-- `docker-compose.yml` - PostgreSQL 16 Alpine
-- `.env.local` - Local database credentials
-
-### 1.2 Design System
-
-- `tailwind.config.ts` - Fonts (Unbounded, Kode Mono), colors
-- `app/globals.css` - CSS variables, dark theme, glow utilities
-- `app/layout.tsx` - Google Fonts import
-
-### 1.3 shadcn/ui Setup
-
-- Initialize with default style
-- Add core components: button, input, card, form, sidebar
-
-### 1.4 Prisma Schema
-
-- `prisma/schema.prisma` - StatusUpdate, Milestone models
-- `lib/db.ts` - Prisma client singleton
-
-### 1.5 Authentication
-
-- `lib/auth.ts` - Credential verification
-- `app/admin/login/page.tsx` - Login form
-- `app/admin/layout.tsx` - Protected layout with sidebar
-
-### 1.6 Admin Dashboard
-
-- `app/admin/page.tsx` - Overview
-- `app/admin/status/page.tsx` - Status update CRUD
-- `app/admin/milestones/page.tsx` - Milestone CRUD
-- API routes for each
-
-### 1.7 Public Homepage
-
-- Single scrollable page
-- Hero section with project name
-- Overall progress indicator
-- Latest status panel
-- Upcoming milestones
-
----
-
-## Phase 2-5: To Be Detailed
-
-Phases 2-5 will be planned in detail after Phase 1 completion:
-
-- **Phase 2**: Blog (Outstatic) + Resource Library
-- **Phase 3**: Focus Widget + Comments/Ideas
-- **Phase 4**: Animations + Gallery + Mobile Polish
-- **Phase 5**: GitHub Integration (nice to have)
+- `npm run dev`: Start dev server
+- `npm run build`: Build for production (includes Prisma migration check)
+- `npm run lint`: Run ESLint
