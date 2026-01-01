@@ -2,7 +2,9 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Rocket, ArrowDown } from "lucide-react";
+import { Rocket, ArrowDown, FileText, BookOpen } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { GlitchText } from "@/components/glitch-text";
 
 export function HeroSection() {
   return (
@@ -35,7 +37,7 @@ export function HeroSection() {
         </motion.div>
 
         <h1 className="text-5xl md:text-7xl font-bold mb-4 text-glow-cyan">
-          Raymond
+          <GlitchText text="Raymond" />
         </h1>
 
         <p className="text-xl md:text-2xl font-semibold text-muted-foreground mb-2 max-w-2xl mx-auto">
@@ -45,6 +47,22 @@ export function HeroSection() {
         <p className="text-sm text-muted-foreground mb-8 font-data">
           Building something cool, one commit at a time
         </p>
+
+        {/* Navigation links */}
+        <div className="flex gap-4 justify-center flex-wrap">
+          <Link href="/blog">
+            <Button variant="outline" className="hover-glow gap-2">
+              <FileText className="h-4 w-4" />
+              Dev Log
+            </Button>
+          </Link>
+          <Link href="/resources">
+            <Button variant="outline" className="hover-glow gap-2">
+              <BookOpen className="h-4 w-4" />
+              Resources
+            </Button>
+          </Link>
+        </div>
       </motion.div>
 
       {/* Scroll indicator */}

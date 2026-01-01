@@ -9,14 +9,20 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { QuickStatusForm } from "./quick-status-form";
+import { FocusInput } from "@/components/focus-input";
+import { GlitchText } from "@/components/glitch-text";
 
 export default async function AdminDashboard() {
-  const [latestStatus, milestones] = await Promise.all([
+  const [latestStatus, milestones, currentFocus] = await Promise.all([
     prisma.statusUpdate.findFirst({
       orderBy: { createdAt: "desc" },
     }),
     prisma.milestone.findMany({
       orderBy: { order: "asc" },
+    }),
+    prisma.focusTask.findFirst({
+      where: { isActive: true },
+      orderBy: { createdAt: "desc" },
     }),
   ]);
 
@@ -37,7 +43,9 @@ export default async function AdminDashboard() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-glow-cyan">Mission Overview</h1>
+        <h1 className="text-3xl font-bold text-glow-cyan">
+          <GlitchText text="Mission Overview" />
+        </h1>
         <p className="text-muted-foreground">Welcome to Mission Control</p>
       </div>
 
@@ -79,6 +87,19 @@ export default async function AdminDashboard() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Current Focus */}
+      <Card className="hover-glow border-amber-500/30">
+        <CardHeader className="pb-2">
+          <CardTitle className="flex items-center gap-2 text-lg">
+            <span className="text-amber-400">⚡</span> Current Focus
+          </CardTitle>
+          <CardDescription>What are you working on right now?</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <FocusInput currentFocus={currentFocus?.content} />
+        </CardContent>
+      </Card>
 
       {/* Quick Status Update */}
       <Card className="hover-glow">

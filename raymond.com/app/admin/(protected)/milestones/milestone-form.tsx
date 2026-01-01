@@ -2,16 +2,27 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { format } from "date-fns";
+import { Calendar as CalendarIcon } from "lucide-react";
+
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 export function MilestoneForm() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [date, setDate] = useState<Date>();
   const [status, setStatus] = useState<
     "UPCOMING" | "IN_PROGRESS" | "COMPLETED"
   >("UPCOMING");
@@ -20,13 +31,18 @@ export function MilestoneForm() {
     e.preventDefault();
     setLoading(true);
 
-    const formData = new FormData(e.currentTarget);
+    const form = e.currentTarget; // Capture form reference
+    const formData = new FormData(form);
+
+    // Format date specifically for API: YYYY-MM-DD
+    const targetDate = date ? format(date, "yyyy-MM-dd") : null;
+
     const data = {
       title: formData.get("title") as string,
       description: (formData.get("description") as string) || null,
       progress,
       status,
-      targetDate: (formData.get("targetDate") as string) || null,
+      targetDate,
     };
 
     try {
@@ -37,9 +53,10 @@ export function MilestoneForm() {
       });
 
       if (res.ok) {
-        e.currentTarget.reset();
+        form.reset(); // Use captured reference
         setProgress(0);
         setStatus("UPCOMING");
+        setDate(undefined);
         router.refresh();
       }
     } finally {
@@ -61,13 +78,32 @@ export function MilestoneForm() {
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="targetDate">Target Date (optional)</Label>
-          <Input
-            id="targetDate"
-            name="targetDate"
-            type="date"
-            className="bg-background"
-          />
+          <Label>Target Date (optional)</Label>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant={"outline"}
+                className={cn(
+                  "w-full justify-start text-left font-normal bg-background",
+                  !date && "text-muted-foreground"
+                )}
+              >
+                <CalendarIcon className="mr-2 h-4 w-4" />
+                {date ? format(date, "PPP") : <span>Pick a date</span>}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0" align="start">
+              <Calendar
+                mode="single"
+                selected={date}
+                onSelect={setDate}
+                initialFocus
+                className="pointer-events-auto"
+              />
+            </PopoverContent>
+          </Popover>
+          {/* Hidden input to ensure logic flow remains similar if needed, 
+              but we are handling date via state now */}
         </div>
       </div>
 

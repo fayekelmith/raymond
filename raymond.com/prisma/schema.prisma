@@ -37,3 +37,28 @@ enum MilestoneStatus {
   IN_PROGRESS
   COMPLETED
 }
+
+model Resource {
+  id         String   @id @default(cuid())
+  title      String
+  url        String
+  category   String   
+  notes      String?
+  difficulty String?  
+  createdAt  DateTime @default(now())
+}
+
+model FocusTask {
+  id        String   @id @default(cuid())
+  content   String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+model Idea {
+  id        String   @id @default(cuid())
+  content   String
+  author    String?
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}

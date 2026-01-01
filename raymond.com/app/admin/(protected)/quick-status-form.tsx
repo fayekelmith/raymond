@@ -15,7 +15,8 @@ export function QuickStatusForm() {
     e.preventDefault();
     setLoading(true);
 
-    const formData = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
     const data = {
       content: formData.get("content") as string,
       blockers: (formData.get("blockers") as string) || null,
@@ -30,7 +31,7 @@ export function QuickStatusForm() {
       });
 
       if (res.ok) {
-        e.currentTarget.reset();
+        form.reset();
         router.refresh();
       }
     } finally {

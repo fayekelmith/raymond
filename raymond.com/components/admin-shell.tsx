@@ -23,6 +23,8 @@ import {
   Target,
   LogOut,
   Rocket,
+  BookOpen,
+  Lightbulb,
 } from "lucide-react";
 
 const navItems = [
@@ -40,6 +42,16 @@ const navItems = [
     title: "Milestones",
     href: "/admin/milestones",
     icon: Target,
+  },
+  {
+    title: "Resources",
+    href: "/admin/resources",
+    icon: BookOpen,
+  },
+  {
+    title: "Ideas",
+    href: "/admin/ideas",
+    icon: Lightbulb,
   },
 ];
 
