@@ -7,7 +7,7 @@ edition = "2021"
 embassy-executor = { version = "0.9.1", features = ["arch-cortex-m", "executor-thread", "executor-interrupt", "defmt"] }
 # this is the Hardware Abstraction Layer for the RP2040
 embassy-time = { version = "0.5.0", features = ["defmt", "defmt-timestamp-uptime"] }
-embassy-rp = { version = "0.9.0", features = ["defmt", "unstable-pac", "time-driver", "critical-section-impl", "rp2040"] }
+embassy-rp = { version = "0.9.0", features = ["defmt", "unstable-pac", "time-driver", "critical-section-impl", "rp2040", "boot2-w25q080"] }
 embassy-usb = { version = "0.5.1", features = ["defmt"] }
 
 cortex-m = { version = "0.7.7", features = ["inline-asm"] }
@@ -19,6 +19,7 @@ portable-atomic = { version = "1.11.0", features = ["critical-section"] }
 
 # Shared library
 shared = { path = "../shared", default-features = false }
+static_cell = "2.1.1"
 
 
 
