@@ -1,3 +1,3 @@
 [workspace]
 resolver = "3"
-members = ["brain", "spine", "dashboard", "shared", "playground"]
+members = ["brain", "spine", "dashboard", "shared", "playground", "standalone"]
