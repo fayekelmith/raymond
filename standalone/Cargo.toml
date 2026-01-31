@@ -33,6 +33,9 @@ panic-probe = { version = "1.0.0", features = ["print-defmt"], optional = true }
 portable-atomic = { version = "1.11.0", features = ["critical-section"], optional = true }
 static_cell = { version = "2.1.1", optional = true }
 
+[dev-dependencies]
+embedded-graphics = "0.8.1"
+
 [features]
 default = ["embedded"]
 embedded = [
