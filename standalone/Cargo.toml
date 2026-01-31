@@ -3,21 +3,50 @@ name = "standalone"
 version = "0.1.0"
 edition = "2021"
 
+[lib]
+name = "standalone"
+path = "src/lib.rs"
+test = true
+
+[[bin]]
+name = "standalone"
+path = "src/main.rs"
+test = false
+
 [dependencies]
-embassy-executor = { version = "0.9.1", features = ["arch-cortex-m", "executor-thread", "executor-interrupt", "defmt"] }
-embassy-time = { version = "0.5.0", features = ["defmt", "defmt-timestamp-uptime"] }
-embassy-rp = { version = "0.9.0", features = ["defmt", "unstable-pac", "time-driver", "critical-section-impl", "rp2040", "boot2-w25q080"] }
+embassy-executor = { version = "0.9.1", features = ["arch-cortex-m", "executor-thread", "executor-interrupt", "defmt"], optional = true }
+embassy-time = { version = "0.5.0", features = ["defmt", "defmt-timestamp-uptime"], optional = true }
+embassy-rp = { version = "0.9.0", features = ["defmt", "unstable-pac", "time-driver", "critical-section-impl", "rp2040", "boot2-w25q080"], optional = true }
 
 # Graphics / LED Matrix
-hub75-pio = { git = "https://github.com/kjagiello/hub75-pio-rs" }
-embedded-graphics = "0.8.1"
+hub75-pio = { git = "https://github.com/kjagiello/hub75-pio-rs", optional = true }
+embedded-graphics = { version = "0.8.1", optional = true }
 
 # Utilities
-fastrand = { version = "2.0.1", default-features = false }
-cortex-m = { version = "0.7.7", features = ["inline-asm"] }
-cortex-m-rt = "0.7.3"
-defmt = "1.0.1"
-defmt-rtt = "1.1.0"
-panic-probe = { version = "1.0.0", features = ["print-defmt"] }
-portable-atomic = { version = "1.11.0", features = ["critical-section"] }
-static_cell = "2.1.1"
+fastrand = { version = "2.0.1", default-features = false, optional = true }
+heapless = "0.8.0"
+cortex-m = { version = "0.7.7", features = ["inline-asm"], optional = true }
+cortex-m-rt = { version = "0.7.3", optional = true }
+defmt = { version = "1.0.1", optional = true }
+defmt-rtt = { version = "1.1.0", optional = true }
+panic-probe = { version = "1.0.0", features = ["print-defmt"], optional = true }
+portable-atomic = { version = "1.11.0", features = ["critical-section"], optional = true }
+static_cell = { version = "2.1.1", optional = true }
+
+[features]
+default = ["embedded"]
+embedded = [
+    "embassy-executor",
+    "embassy-time",
+    "embassy-rp",
+    "hub75-pio",
+    "embedded-graphics",
+    "fastrand",
+    "cortex-m",
+    "cortex-m-rt",
+    "defmt",
+    "defmt-rtt",
+    "panic-probe",
+    "portable-atomic",
+    "static_cell",
+]
