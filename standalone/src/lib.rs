@@ -7,3 +7,4 @@
 
 pub mod game;
 pub mod animator;
+pub mod colors;
