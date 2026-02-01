@@ -1,4 +1,5 @@
 use embedded_graphics::pixelcolor::Rgb888;
+use embedded_graphics::prelude::RgbColor;
 
 /// Predefined neon color palette for LED matrix display
 pub const NEON_PALETTE: [Rgb888; 8] = [
@@ -29,9 +30,9 @@ pub fn interpolate_rgb(from: Rgb888, to: Rgb888, t: f32) -> Rgb888 {
     let b = from.b() as f32 + ((to.b() as i16 - from.b() as i16) as f32 * t_clamped);
     
     Rgb888::new(
-        r.round() as u8,
-        g.round() as u8,
-        b.round() as u8,
+        (r + 0.5) as u8,
+        (g + 0.5) as u8,
+        (b + 0.5) as u8,
     )
 }
 
