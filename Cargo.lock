@@ -894,6 +894,18 @@ checksum = "fc0fef456e4baa96da950455cd02c081ca953b141298e41db3fc7e36b1da849c"
 [[package]]
 name = "hub75-pio"
 version = "0.1.0"
+source = "git+https://github.com/kjagiello/hub75-pio-rs?branch=main#69800e2961aa6323177e9692692c9996ffc32f13"
+dependencies = [
+ "embedded-graphics",
+ "libm",
+ "pio 0.2.1",
+ "pio-proc 0.2.2",
+ "rp2040-hal",
+]
+
+[[package]]
+name = "hub75-pio"
+version = "0.1.0"
 source = "git+https://github.com/kjagiello/hub75-pio-rs#262bca716990f0c7eb54b6d6f40578498a78a505"
 dependencies = [
  "embedded-graphics",
@@ -1327,7 +1339,7 @@ dependencies = [
  "embassy-time",
  "embedded-graphics",
  "fastrand",
- "hub75-pio",
+ "hub75-pio 0.1.0 (git+https://github.com/kjagiello/hub75-pio-rs)",
  "panic-probe",
  "portable-atomic",
  "static_cell",
@@ -1508,6 +1520,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "rp-pico"
+version = "0.8.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6341771e6f8e5d130b2b3cbc23435b7847761adf198af09f4b2a60407d43bd56"
+dependencies = [
+ "cortex-m-rt",
+ "fugit",
+ "rp2040-boot2",
+ "rp2040-hal",
+ "usb-device 0.2.9",
+]
+
+[[package]]
 name = "rp2040-boot2"
 version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1559,6 +1584,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "12d9d8375815f543f54835d01160d4e47f9e2cae75f17ff8f1ec19ce1da96e4c"
 dependencies = [
  "cortex-m",
+ "cortex-m-rt",
  "critical-section",
  "vcell",
 ]
@@ -1735,15 +1761,17 @@ dependencies = [
  "defmt",
  "defmt-rtt",
  "embassy-executor",
- "embassy-rp",
  "embassy-sync",
  "embassy-time",
+ "embassy-time-driver",
  "embedded-graphics",
  "fastrand",
  "heapless",
- "hub75-pio",
+ "hub75-pio 0.1.0 (git+https://github.com/kjagiello/hub75-pio-rs?branch=main)",
  "panic-probe",
  "portable-atomic",
+ "rp-pico",
+ "rp2040-hal",
  "static_cell",
 ]
 

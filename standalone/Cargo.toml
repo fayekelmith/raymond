@@ -6,10 +6,10 @@ edition = "2021"
 [dependencies]
 embassy-executor = { version = "0.9.1", features = ["arch-cortex-m", "executor-thread", "executor-interrupt", "defmt"], optional = true }
 embassy-time = { version = "0.5.0", features = ["defmt", "defmt-timestamp-uptime"], optional = true }
-embassy-rp = { version = "0.9.0", features = ["defmt", "unstable-pac", "time-driver", "critical-section-impl", "rp2040", "boot2-w25q080"], optional = true }
+embassy-time-driver = { version = "0.2.0", optional = true }
 
 # Graphics / LED Matrix
-hub75-pio = { git = "https://github.com/kjagiello/hub75-pio-rs", optional = true }
+hub75-pio = { git = "https://github.com/kjagiello/hub75-pio-rs", branch = "main", optional = true }
 embedded-graphics = { version = "0.8.1", optional = true }
 
 # Utilities
@@ -17,6 +17,8 @@ fastrand = { version = "2.0.1", default-features = false, optional = true }
 heapless = "0.8.0"
 cortex-m = { version = "0.7.7", features = ["inline-asm"], optional = true }
 cortex-m-rt = { version = "0.7.3", optional = true }
+rp2040-hal = {version = "0.9", optional = true}
+rp-pico = {version = "0.8", optional = true}
 defmt = { version = "1.0.1", optional = true }
 defmt-rtt = { version = "1.1.0", optional = true }
 panic-probe = { version = "1.0.0", features = ["print-defmt"], optional = true }
@@ -32,7 +34,7 @@ default = ["embedded"]
 embedded = [
     "embassy-executor",
     "embassy-time",
-    "embassy-rp",
+    "embassy-time-driver",
     "embassy-sync",
     "hub75-pio",
     "embedded-graphics",
@@ -44,5 +46,7 @@ embedded = [
     "panic-probe",
     "portable-atomic",
     "static_cell",
+    "rp2040-hal",
+    "rp-pico",
 ]
 embassy-sync = ["dep:embassy-sync"]
