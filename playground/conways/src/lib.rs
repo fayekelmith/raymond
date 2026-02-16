@@ -1,4 +1,4 @@
-//! Standalone library for testing
+//! Conway's Game of Life library for testing
 //!
 //! This library target allows testing code on the host platform
 //! while the binary target remains no_std for embedded deployment
