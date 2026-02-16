@@ -173,6 +173,29 @@ dependencies = [
 ]
 
 [[package]]
+name = "conways"
+version = "0.1.0"
+dependencies = [
+ "cortex-m",
+ "cortex-m-rt",
+ "defmt",
+ "defmt-rtt",
+ "embassy-executor",
+ "embassy-sync",
+ "embassy-time",
+ "embassy-time-driver",
+ "embedded-graphics",
+ "fastrand",
+ "heapless",
+ "hub75-pio",
+ "panic-probe",
+ "portable-atomic",
+ "rp-pico",
+ "rp2040-hal",
+ "static_cell",
+]
+
+[[package]]
 name = "cortex-m"
 version = "0.7.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -904,18 +927,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "hub75-pio"
-version = "0.1.0"
-source = "git+https://github.com/kjagiello/hub75-pio-rs#262bca716990f0c7eb54b6d6f40578498a78a505"
-dependencies = [
- "embedded-graphics",
- "libm",
- "pio 0.2.1",
- "pio-proc 0.2.2",
- "rp2040-hal",
-]
-
-[[package]]
 name = "ident_case"
 version = "1.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1327,25 +1338,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "playground"
-version = "0.1.0"
-dependencies = [
- "cortex-m",
- "cortex-m-rt",
- "defmt",
- "defmt-rtt",
- "embassy-executor",
- "embassy-rp",
- "embassy-time",
- "embedded-graphics",
- "fastrand",
- "hub75-pio 0.1.0 (git+https://github.com/kjagiello/hub75-pio-rs)",
- "panic-probe",
- "portable-atomic",
- "static_cell",
-]
-
-[[package]]
 name = "portable-atomic"
 version = "1.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1751,29 +1743,6 @@ name = "stable_deref_trait"
 version = "1.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6ce2be8dc25455e1f91df71bfa12ad37d7af1092ae736f3a6cd0e37bc7810596"
-
-[[package]]
-name = "standalone"
-version = "0.1.0"
-dependencies = [
- "cortex-m",
- "cortex-m-rt",
- "defmt",
- "defmt-rtt",
- "embassy-executor",
- "embassy-sync",
- "embassy-time",
- "embassy-time-driver",
- "embedded-graphics",
- "fastrand",
- "heapless",
- "hub75-pio 0.1.0 (git+https://github.com/kjagiello/hub75-pio-rs?branch=main)",
- "panic-probe",
- "portable-atomic",
- "rp-pico",
- "rp2040-hal",
- "static_cell",
-]
 
 [[package]]
 name = "static_cell"
