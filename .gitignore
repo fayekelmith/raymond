@@ -1,9 +1,10 @@
 .agent
 # Rust
 /target/
-
+*/**/target/
 # Backup files from rustfmt
 **/*.rs.bk
 
 # MSVC Windows builds
 *.pdb
+
