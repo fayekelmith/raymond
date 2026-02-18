@@ -9,7 +9,7 @@ Complete hardware configuration for Raymond's spine (Raspberry Pi Pico W 2040) c
 ### Components
 - **MCU**: Raspberry Pi Pico W 2040
 - **Motors**: 4× GB37-520 (12V, 0.7A, 330RPM, with encoders)
-- **Motor Drivers**: 2× L298N (MVP) or 2× TB6612FNG (upgrade)
+- **Motor Drivers**: 2× TB6612FNG
 - **IMU**: BNO055 (I2C)
 - **ToF Sensor**: TBD model
 - **Power**: 11V battery + voltage regulator
@@ -17,7 +17,7 @@ Complete hardware configuration for Raymond's spine (Raspberry Pi Pico W 2040) c
 ### Motor Specifications
 - Model: GB37-520
 - Rated voltage: DC 12V
-- Rated current: ≤0.7A
+- Rated current: ≤0.7Ad
 - Speed: 330RPM
 - Rated power: ≈7.2W
 - Encoder accuracy: 1320 CPR (counts per revolution)
@@ -30,8 +30,8 @@ Complete hardware configuration for Raymond's spine (Raspberry Pi Pico W 2040) c
 ### Battery to Components
 ```
 11V Battery (+)
-  ├─→ L298N #1 Motor Supply (12V/Vs)
-  ├─→ L298N #2 Motor Supply (12V/Vs)
+  ├─→ TB6612FNG #1 Motor Supply (VM)
+  ├─→ TB6612FNG #2 Motor Supply (VM)
   └─→ Voltage Regulator Input (11V → 5V)
 
 5V Regulator Output
@@ -54,76 +54,11 @@ All GND → Common Ground (battery, drivers, Pico, sensors)
 
 ---
 
-## Configuration Option 1: L298N (MVP)
-
-### Why L298N for MVP?
-- ✅ Readily available and cheap
-- ✅ Simple to wire
-- ✅ Good for learning basics
-- ⚠️ Less efficient (BJT-based)
-- ⚠️ 2-4V voltage drop
-- ⚠️ Generates significant heat
-
-### Motor Wiring (Independent Control)
-
-**L298N Driver #1 (Front Motors)**
-```
-Channel A:
-  OUT1 → Motor Front-Left M+
-  OUT2 → Motor Front-Left M-
-
-Channel B:
-  OUT3 → Motor Front-Right M+
-  OUT4 → Motor Front-Right M-
-```
-
-**L298N Driver #2 (Rear Motors)**
-```
-Channel A:
-  OUT1 → Motor Rear-Left M+
-  OUT2 → Motor Rear-Left M-
-
-Channel B:
-  OUT3 → Motor Rear-Right M+
-  OUT4 → Motor Rear-Right M-
-```
-
-### Control Pin Mapping (Pico W → L298N)
-
-**L298N #1 (Front Motors)**
-| L298N Pin | Pico W GPIO | Function                  |
-|-----------|-------------|---------------------------|
-| ENA       | GPIO2       | PWM - Front-Left speed    |
-| IN1       | GPIO3       | Front-Left direction bit 1|
-| IN2       | GPIO6       | Front-Left direction bit 2|
-| ENB       | GPIO7       | PWM - Front-Right speed   |
-| IN3       | GPIO10      | Front-Right direction bit 1|
-| IN4       | GPIO11      | Front-Right direction bit 2|
-| GND       | GND         | Common ground             |
-
-**L298N #2 (Rear Motors)**
-| L298N Pin | Pico W GPIO | Function                  |
-|-----------|-------------|---------------------------|
-| ENA       | GPIO20      | PWM - Rear-Left speed     |
-| IN1       | GPIO21      | Rear-Left direction bit 1 |
-| IN2       | GPIO22      | Rear-Left direction bit 2 |
-| ENB       | GPIO26      | PWM - Rear-Right speed    |
-| IN3       | GPIO27      | Rear-Right direction bit 1|
-| IN4       | GPIO28      | Rear-Right direction bit 2|
-| GND       | GND         | Common ground             |
-
-### L298N Notes
-- Do **not** connect 5V pin (we're using EN pins for PWM)
-- Heat sinks recommended
-- Test on bench before full load
-
----
-
-## Configuration Option 2: TB6612FNG (Upgrade)
+## TB6612FNG Configuration
 
 ### Why TB6612FNG?
 - ✅ Much more efficient (MOSFET-based)
-- ✅ Only ~0.5V voltage drop (vs 2-4V on L298N)
+- ✅ Only ~0.5V voltage drop
 - ✅ Native 3.3V logic compatible
 - ✅ Minimal heat generation
 - ✅ Better low-speed control
@@ -200,7 +135,7 @@ Both drivers STBY → GPIO1 (parallel)
 
 ---
 
-## Encoder Wiring (Same for Both Drivers)
+## Encoder Wiring
 
 Each motor has 6 pins:
 - **M+, M-**: Motor power (to driver outputs)
@@ -237,39 +172,7 @@ Each motor has 6 pins:
 
 ---
 
-## Complete Pin Map Summary
-
-### For L298N Configuration
-| GPIO | Function                  |
-|------|---------------------------|
-| 0    | (Available)               |
-| 1    | (Available)               |
-| 2    | L298N #1 ENA (FL PWM)     |
-| 3    | L298N #1 IN1 (FL)         |
-| 4    | I2C SDA                   |
-| 5    | I2C SCL                   |
-| 6    | L298N #1 IN2 (FL)         |
-| 7    | L298N #1 ENB (FR PWM)     |
-| 8    | UART1 TX (to Brain)       |
-| 9    | UART1 RX (from Brain)     |
-| 10   | L298N #1 IN3 (FR)         |
-| 11   | L298N #1 IN4 (FR)         |
-| 12   | Encoder FL-A              |
-| 13   | Encoder FL-B              |
-| 14   | Encoder RL-A              |
-| 15   | Encoder RL-B              |
-| 16   | Encoder FR-A              |
-| 17   | Encoder FR-B              |
-| 18   | Encoder RR-A              |
-| 19   | Encoder RR-B              |
-| 20   | L298N #2 ENA (RL PWM)     |
-| 21   | L298N #2 IN1 (RL)         |
-| 22   | L298N #2 IN2 (RL)         |
-| 26   | L298N #2 ENB (RR PWM)     |
-| 27   | L298N #2 IN3 (RR)         |
-| 28   | L298N #2 IN4 (RR)         |
-
-### For TB6612FNG Configuration
+## Complete Pin Map Summary (TB6612FNG)
 | GPIO | Function                  |
 |------|---------------------------|
 | 0    | TB6612 #2 STBY            |
@@ -303,8 +206,6 @@ Each motor has 6 pins:
 
 ## Motor Control Logic (H-Bridge)
 
-Same for both L298N and TB6612FNG:
-
 ### Direction Control
 | IN1/AIN1 | IN2/AIN2 | Result     |
 |----------|----------|------------|
@@ -314,51 +215,10 @@ Same for both L298N and TB6612FNG:
 | HIGH     | HIGH     | Brake      |
 
 ### Speed Control
-- Use PWM on EN (L298N) or PWM (TB6612FNG)
+- Use PWM on PWMA/PWMB
 - 0% duty = stopped
 - 100% duty = full speed
 - Typical range: 30-100% (below 30% motors may stall)
-
----
-
-## Code Migration (L298N → TB6612FNG)
-
-### Key Differences in Code
-
-**L298N:**
-```rust
-// No STBY needed, driver always on
-en_pin.set_duty(speed);
-in1_pin.set_high();
-in2_pin.set_low();
-```
-
-**TB6612FNG:**
-```rust
-// Must enable STBY first
-stby_pin.set_high();
-
-// Then control as before
-pwm_pin.set_duty(speed);
-ain1_pin.set_high();
-ain2_pin.set_low();
-
-// Emergency stop
-stby_pin.set_low(); // instantly disables all motors
-```
-
-### Pin Abstraction (Recommended)
-Create a motor driver trait that abstracts both:
-```rust
-trait MotorDriver {
-    fn enable(&mut self);
-    fn disable(&mut self);
-    fn set_speed(&mut self, motor: Motor, speed: u16);
-    fn set_direction(&mut self, motor: Motor, dir: Direction);
-}
-```
-
-This way, switching drivers only requires changing the implementation, not the control logic.
 
 ---
 
