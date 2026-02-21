@@ -1,12 +1,17 @@
 #![no_std]
 #![no_main]
 
+mod command_router;
+
+use command_router::{CommandRouter, NoopActuator};
 use embassy_executor::Spawner;
 use embassy_rp::bind_interrupts;
 use embassy_rp::peripherals::USB;
 use embassy_rp::usb::{Driver, InterruptHandler};
 use embassy_usb::class::cdc_acm::{CdcAcmClass, State};
 use embassy_usb::{Builder, Config};
+use shared::common::time::TimestampMs;
+use shared::protocol::command::SpineCommand;
 use static_cell::StaticCell;
 use {defmt_rtt as _, panic_probe as _};
 
@@ -63,8 +68,15 @@ async fn main(spawner: Spawner) {
     //start he background USB task
     spawner.spawn(usb_task(usb)).unwrap();
 
+    let mut router = CommandRouter::new(TimestampMs::from_millis(0));
+    let mut actuator = NoopActuator;
+    let mut now_ms: u64 = 0;
+
     loop {
         class.wait_connection().await;
+
+        let now = TimestampMs::from_millis(now_ms);
+        let _telemetry = router.handle_command(SpineCommand::Ping { sent_at: now }, &mut actuator, now);
 
         // send a message
 
@@ -72,5 +84,6 @@ async fn main(spawner: Spawner) {
 
         // sleep for 1 second
         embassy_time::Timer::after_secs(1).await;
+        now_ms = now_ms.saturating_add(1_000);
     }
 }
